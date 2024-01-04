@@ -1,22 +1,42 @@
+<!DOCTYPE html>
 <html
         style="margin:8px 0; background-color: black; color:white; font-family: Geneva, Tahoma, sans-serif; font-size: 12px;">
 
 <head>
-        <title> Plasma Frigate Password Generator </title>
-        <script> 
-                function password() {
-                        var TID = parseInt(document.getElementById("TID").value)
-                        var answers = ["RESHIRAM", "ZEKROM", "9909", "7707", "2202"]
-                        document.getElementById("res").innerHTML = "<b> Password: </b> " + answers[(TID % 256) % 5];
-                }
-        </script>
+    <title> Plasma Frigate Password Generator </title>
 </head>
 
 <body>
-        <h4> Plasma Frigate Password (For BW2 Manipless)</h4>
-        TID: <input id="TID" type="text"> </input>
-        <button onclick="password()"> Get password </button>
-        <p id="res"> </p>
-</body>
+<form>
+    <h4>Plasma Frigate Password (For BW2 Manipless)</h4>
+    TID: <input id="TID" type="text" autocomplete="off">
+    <button type="submit"> Get password </button>
+</form>
+<p id="res"> </p>
 
+<script>
+
+const answers = ["RESHIRAM", "ZEKROM", "9909", "7707", "2202"];
+const $TID = document.getElementById("TID");
+
+function password(event) {
+    event.preventDefault();
+
+    if (!$TID.value) {
+        return;
+    }
+
+    const TID = Number($TID.value);
+    if (!isNaN(TID)) {
+        document.getElementById("res").innerHTML = "<b> Password: </b> " + answers[(TID % 256) % 5];
+    } else {
+        document.getElementById("res").innerHTML = "<b> Password: </b> Invalid TID";
+    }
+}
+
+$TID.addEventListener("input", password);
+document.querySelector("form").addEventListener("submit", password);
+password();
+</script>
+</body>
 </html>
